@@ -28,35 +28,6 @@ body {
   z-index: -1;
 }
 
-/* ===================== Navigation ===================== */
-nav {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background: rgba(0,0,0,0.85);
-  padding: 1rem;
-  z-index: 1000;
-}
-
-nav ul {
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin: 0;
-  padding: 0;
-}
-
-nav a {
-  color: #fff;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-nav a:hover {
-  color: #ff0000;
-}
-
 /* ===================== Header ===================== */
 header {
   padding-top: 5rem;
@@ -108,39 +79,26 @@ header h1 {
   box-shadow: 0 0 20px #9146FF;
 }
 
-/* ===================== Footer ===================== */
-footer {
-  background: #111;
-  padding: 2rem;
+/* ===================== YouTube Video ===================== */
+.youtube {
   text-align: center;
-  color: #aaa;
+  padding: 2rem;
 }
 
-.social-links {
-  margin: 1rem 0;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.social-links a {
-  color: #1e90ff;
-  font-weight: bold;
-  text-decoration: none;
-}
-
-.social-links a:hover {
-  color: #ff0000;
-  text-shadow: 0 0 10px #ff0000;
+.youtube iframe {
+  width: 100%;
+  max-width: 720px;
+  height: 405px;
+  border-radius: 12px;
+  border: none;
 }
 
 /* ===================== Responsive ===================== */
 @media (max-width: 768px) {
   header h1 { font-size: 2rem; }
-  nav ul { flex-wrap: wrap; gap: 1rem; }
   .hero { padding: 3rem 1rem; }
   .twitch-link { font-size: 0.9rem; padding: 0.8rem 1.5rem; }
+  .youtube iframe { height: 250px; }
 }
 </style>
 </head>
@@ -149,17 +107,8 @@ footer {
 <!-- Particles -->
 <div id="particles-js"></div>
 
-<!-- Navigation -->
-<nav>
-  <ul>
-    <li><a href="#home">Home</a></li>
-    <li><a href="#watch">Watch</a></li>
-    <li><a href="#footer">Footer</a></li>
-  </ul>
-</nav>
-
 <!-- Header -->
-<header id="home">
+<header>
   <h1>The Soul Dragger</h1>
 </header>
 
@@ -169,20 +118,15 @@ footer {
   <a class="twitch-link" href="https://www.twitch.tv/thesouldragger" target="_blank">Watch on Twitch</a>
 </section>
 
-<!-- Footer -->
-<footer id="footer">
-  <p>Follow Soul Dragger:</p>
-  <div class="social-links">
-    <a href="https://www.youtube.com/c/TheSoulDragger" target="_blank">YouTube</a>
-    <a href="https://www.twitch.tv/thesouldragger" target="_blank">Twitch</a>
-    <a href="https://www.instagram.com/thesouldragger1" target="_blank">Instagram</a>
-    <a href="https://discord.gg/mrSanmn" target="_blank">Discord</a>
-    <a href="https://twitter.com/Bawaqar_Haider" target="_blank">Twitter</a>
-  </div>
-  <p>© 2026 The Soul Dragger Site</p>
-</footer>
+<!-- Latest YouTube Video -->
+<section class="youtube">
+  <h2>🎥 Latest YouTube Video</h2>
+  <iframe src="https://www.youtube.com/embed/IU4GI9swurs" 
+          title="YouTube video player" 
+          allowfullscreen>
+  </iframe>
+</section>
 
-<!-- ===================== Scripts ===================== -->
 <script>
 /* PARTICLES */
 particlesJS("particles-js", {
