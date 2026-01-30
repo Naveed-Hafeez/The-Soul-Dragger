@@ -44,7 +44,7 @@ header h1 {
 .hero {
   position: relative;
   text-align: center;
-  padding: 4rem 2rem;
+  padding: 6rem 2rem 4rem;
   background-image: url('https://pbs.twimg.com/profile_banners/37470070/1698107747/1080x360');
   background-size: cover;
   background-position: center;
@@ -62,46 +62,70 @@ header h1 {
   z-index: 1;
 }
 
-.twitch-link {
+.live-badge {
   display: inline-block;
   margin-top: 1rem;
-  padding: 1rem 2rem;
-  background: #9146FF;
-  color: #fff;
+  padding: 0.4rem 1rem;
+  background: gray;
+  border-radius: 20px;
   font-weight: bold;
+}
+
+/* ===================== Twitch Link ===================== */
+.twitch-link a {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 1rem 2.5rem;
   border-radius: 50px;
   text-decoration: none;
-  transition: transform 0.3s, box-shadow 0.3s;
+  color: #fff;
+  font-weight: bold;
+  background: #9146FF;
+  box-shadow: 0 0 20px rgba(145,70,255,0.8);
 }
 
-.twitch-link:hover {
+.twitch-link a:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 20px #9146FF;
+  box-shadow: 0 0 40px currentColor;
 }
 
-/* ===================== YouTube Video ===================== */
-.youtube {
-  text-align: center;
+/* ===================== Footer ===================== */
+footer {
+  background: #111;
   padding: 2rem;
+  text-align: center;
+  color: #aaa;
 }
 
-.youtube iframe {
-  width: 100%;
-  max-width: 720px;
-  height: 405px;
-  border-radius: 12px;
-  border: none;
+.social-links {
+  margin: 1rem 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.social-links a {
+  color: #1e90ff;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.social-links a:hover {
+  color: #ff0000;
+  text-shadow: 0 0 10px #ff0000;
 }
 
 /* ===================== Responsive ===================== */
 @media (max-width: 768px) {
   header h1 { font-size: 2rem; }
-  .hero { padding: 3rem 1rem; }
-  .twitch-link { font-size: 0.9rem; padding: 0.8rem 1.5rem; }
-  .youtube iframe { height: 250px; }
+  .twitch-link a { font-size: 0.9rem; padding: 0.8rem 2rem; }
 }
 </style>
 </head>
+
 <body>
 
 <!-- Particles -->
@@ -115,20 +139,26 @@ header h1 {
 <!-- Hero -->
 <section class="hero">
   <p>Streamer & Content Creator</p>
-  <a class="twitch-link" href="https://www.twitch.tv/thesouldragger" target="_blank">Watch on Twitch</a>
+  <div id="liveStatus" class="live-badge">⚪ OFFLINE</div>
+  <div class="twitch-link">
+    <a href="https://www.twitch.tv/thesouldragger" target="_blank">Watch on Twitch</a>
+  </div>
 </section>
 
-<!-- Latest YouTube Video -->
-<section class="youtube">
-  <h2>🎥 Latest YouTube Video</h2>
-  <iframe src="https://www.youtube.com/embed/IU4GI9swurs" 
-          title="YouTube video player" 
-          allowfullscreen>
-  </iframe>
-</section>
+<!-- Footer -->
+<footer>
+  <div class="social-links">
+    <a href="https://www.youtube.com/c/TheSoulDragger" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+    <a href="https://www.instagram.com/thesouldragger1/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+    <a href="https://www.facebook.com/TheSoulDragger/" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+    <a href="https://www.tiktok.com/@thesouldragger?lang=en" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a>
+    <a href="https://x.com/Bawaqar_Haider" target="_blank"><i class="fab fa-x-twitter"></i> X</a>
+  </div>
+  <p>© 2026 The Soul Dragger Site</p>
+</footer>
 
 <script>
-/* PARTICLES */
+/* ===================== PARTICLES ===================== */
 particlesJS("particles-js", {
   particles: {
     number: { value: 50 },
@@ -136,6 +166,33 @@ particlesJS("particles-js", {
     size: { value: 3 },
     move: { speed: 1 }
   }
+});
+
+/* ===================== Twitch Live Status ===================== */
+// Using Twitch API (no OAuth required for public streams)
+const clientId = "YOUR_CLIENT_ID"; // Replace with your Twitch Client ID
+const username = "thesouldragger"; // Twitch username
+const badge = document.getElementById("liveStatus");
+
+fetch(`https://api.twitch.tv/helix/streams?user_login=${username}`, {
+  headers: {
+    'Client-ID': clientId,
+    'Authorization': 'Bearer YOUR_OAUTH_TOKEN' // optional for public info if needed
+  }
+})
+.then(res => res.json())
+.then(data => {
+  if(data.data && data.data.length > 0) {
+    badge.textContent = "🔴 LIVE";
+    badge.style.background = "red";
+  } else {
+    badge.textContent = "⚪ OFFLINE";
+    badge.style.background = "gray";
+  }
+})
+.catch(err => {
+  console.error(err);
+  badge.textContent = "⚪ OFFLINE";
 });
 </script>
 
